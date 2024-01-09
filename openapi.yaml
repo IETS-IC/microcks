@@ -1,0 +1,65 @@
+---
+openapi: 3.0.0
+info:
+  title: credit-card-ws
+  version: 1.0
+  description: An API for validating if a credit card number is correct
+paths:
+  /api/creditCard-ws:
+    get:
+      summary: Credit card validation greeter
+      description: Greet the user and tell them the service they have reached
+      operationId: welcomeUser
+      responses:
+        200:
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                answer:
+                  value: Hello, you have reached the Credit Card Validation service
+  /api/creditCard-ws/validation:
+    get:
+      summary: Credit card validation error
+      description: Tell the user to input a creditcard
+      operationId: askCC
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+              examples:
+                answer:
+                  value: Please provide a credit card number as a URI param
+  /api/creditCard-ws/validation/{creditCardNumber}:
+    get:
+      parameters:
+      - name: creditCardNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Validation'
+components:
+  schemas:
+    Validation:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        valid:
+          type: boolean
+        iD:
+          type: string
